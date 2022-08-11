@@ -1,23 +1,24 @@
 import server from "./src/app";
 const { conn } = require("./src/db");
-import {
+const { PORT } = process.env
+/* import {
   setData,
   setOffers,
   setProposals,
   setPortfolios,
   setReview,
-} from "./data";
+} from "./data"; */
 /* const setData =require('./data');
 const setOffersAndProposals =require('./data'); */
 
 // Syncing all the models at once.
 conn.sync({ force: false }).then(() => {
-  server.listen(process.env || 3001,'0.0.0.0', async () => {
+  server.listen(PORT || 3001,'0.0.0.0', async () => {
     console.log("%s listening at 3001"); // eslint-disable-line no-console
-    await setData();
+    /* await setData();
     await setOffers();
     await setProposals();
     await setPortfolios();
-    await setReview();
+    await setReview(); */
   });
 });

@@ -2,7 +2,7 @@ require("dotenv").config();
 const { Sequelize } = require("sequelize");
 const fs = require("fs");
 const path = require("path");
-const { DB_USER, DB_PASSWORD, DB_HOST, DB_NAME } = process.env;
+const { DATABASE_URL } = process.env;
 
 // let sequelize =
 //   process.env.NODE_ENV === "production"
@@ -33,13 +33,17 @@ const { DB_USER, DB_PASSWORD, DB_HOST, DB_NAME } = process.env;
 //         { logging: false, native: false }
 //       );
 
-const sequelize = new Sequelize(
-  `postgres://${DB_USER}:${DB_PASSWORD}@${DB_HOST}/${DB_NAME}`,
-  {
-    logging: false, // set to console.log to see the raw SQL queries
-    native: false, // lets Sequelize know we can use pg-native for ~30% more speed
+const sequelize = new Sequelize(DATABASE_URL, {
+  logging: false, // set to console.log to see the raw SQL queries
+  native: false, // lets Sequelize know we can use pg-native for ~30% more speed
+// Ref.: https://github.com/brianc/node-postgres/issues/2009
+  dialectOptions: {
+              ssl: {
+                require: true,
+                rejectUnauthorized: false,
+              },
   }
-);
+});
 const basename = path.basename(__filename);
 
 const modelDefiners: any[] = [];
@@ -99,8 +103,6 @@ Review.belongsTo(Offer);
 //Un worker tiene muchos protfolios, un portfolio pertenece a un worker
 UserWorker.hasMany(Portfolio);
 Portfolio.belongsTo(UserWorker);
-
-
 
 module.exports = {
   ...sequelize.models, // para poder importar los modelos así: const { Product, User } = require('./db.js');
