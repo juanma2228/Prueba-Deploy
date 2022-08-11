@@ -25,8 +25,8 @@ const { PORT } = process.env;
 /* const setData =require('./data');
 const setOffersAndProposals =require('./data'); */
 // Syncing all the models at once.
-conn.sync({ force: false }).then(() => {
-    app_1.default.listen(PORT || 3001, '0.0.0.0', () => __awaiter(void 0, void 0, void 0, function* () {
+conn.sync({ force: true }).then(() => {
+    app_1.default.listen(PORT, () => __awaiter(void 0, void 0, void 0, function* () {
         console.log("%s listening at 3001"); // eslint-disable-line no-console
         /* await setData();
         await setOffers();
