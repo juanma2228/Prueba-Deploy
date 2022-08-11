@@ -1,13 +1,13 @@
 import server from "./src/app";
 const { conn } = require("./src/db");
 const { PORT } = process.env
-import {
+/* import {
   setData,
   setOffers,
   setProposals,
   setPortfolios,
   setReview,
-} from "./data";
+} from "./data"; */
 /* const setData =require('./data');
 const setOffersAndProposals =require('./data'); */
 
@@ -15,10 +15,10 @@ const setOffersAndProposals =require('./data'); */
 conn.sync({ force: true }).then(() => {
   server.listen(PORT, async () => {
     console.log("%s listening at 3001"); // eslint-disable-line no-console
-    await setData();
+  /*   await setData();
     await setOffers();
     await setProposals();
     await setPortfolios();
-    await setReview();
+    await setReview(); */
   });
 });
